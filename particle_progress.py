@@ -42,6 +42,7 @@ class ParticleNyan:
 	def add_particles(self,offset,color):
 		pos_x = pygame.mouse.get_pos()[0]
 		pos_y = pygame.mouse.get_pos()[1] + offset
+		
 		particle_rect = pygame.Rect(int(pos_x - self.size/2),int(pos_y - self.size/2),self.size,self.size)
 		self.particles.append((particle_rect,color))
 
@@ -51,12 +52,12 @@ class ParticleNyan:
 
 	def draw_nyancat(self):
 		nyan_rect = nyan_surface.get_rect(center = pygame.mouse.get_pos())
-		screen.blit(nyan_surface,nyan_rect)
+		screen.blit(star,nyan_rect)
 
 class ParticleStar:
 	def __init__(self):
 		self.particles = []
-		self.surface = pygame.image.load('Star.png').convert_alpha()
+		self.surface = pygame.image.load('star.png').convert_alpha()
 		self.width = self.surface.get_rect().width
 		self.height = self.surface.get_rect().height
 
@@ -68,6 +69,9 @@ class ParticleStar:
 				particle[0].y += particle[2]
 				particle[3] -= 0.2
 				screen.blit(self.surface,particle[0])
+				pos_x = pygame.mouse.get_pos()[0]
+				pos_y = pygame.mouse.get_pos()[1]
+				screen.blit(nyan_surface, (pos_x - 100, pos_y-50))
 
 	def add_particles(self):
 		pos_x = pygame.mouse.get_pos()[0] - self.width / 2
@@ -88,13 +92,14 @@ clock = pygame.time.Clock()
 
 particle1 = ParticlePrinciple()
 
+star = pygame.image.load('star.png').convert_alpha()
 nyan_surface = pygame.image.load('nyan_cat.png').convert_alpha()
 particle2 = ParticleNyan()
 
 particle3 = ParticleStar()
 
 PARTICLE_EVENT = pygame.USEREVENT + 1
-pygame.time.set_timer(PARTICLE_EVENT,40)
+pygame.time.set_timer(PARTICLE_EVENT,1)
 
 while True:
 	for event in pygame.event.get():
